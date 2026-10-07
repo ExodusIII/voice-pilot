@@ -1,0 +1,13 @@
+<Window x:Class="VoicePilot.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+        Title="VoicePilot"
+        Width="1180" Height="800" MinWidth="880" MinHeight="600"
+        WindowStartupLocation="CenterScreen"
+        Background="#0A0C10"
+        Icon="pack://application:,,,/Assets/app.ico">
+    <Grid>
+        <wv2:WebView2 x:Name="Web" />
+    </Grid>
+</Window>

@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="tr" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VoicePilot</title>
+  <link rel="icon" href="icon.png">
+  <link rel="stylesheet" href="css/app.css">
+  <script>
+    // A script error would otherwise leave an empty window (the body fades in only after boot).
+    window.addEventListener('error', e => {
+      document.body.style.opacity = 1;
+      document.body.insertAdjacentHTML('afterbegin', '<pre style="position:fixed;z-index:99;inset:auto 16px 16px;padding:12px;background:#300;color:#fbb;border-radius:8px;white-space:pre-wrap">' +
+        String(e.message).replace(/</g, '&lt;') + '\n' + (e.filename || '') + ':' + (e.lineno || '') + '</pre>');
+    });
+  </script>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="icon.png" alt="" class="brand-logo">
+        <div>
+          <div class="brand-name">VoicePilot</div>
+          <div class="brand-sub" data-t="tagline"></div>
+        </div>
+      </div>
+      <nav class="nav">
+        <button class="nav-item" data-view="home"><span data-icon="mic"></span><span data-t="nav_home"></span></button>
+        <button class="nav-item" data-view="commands"><span data-icon="list"></span><span data-t="nav_commands"></span></button>
+        <button class="nav-item" data-view="settings"><span data-icon="settings"></span><span data-t="nav_settings"></span></button>
+      </nav>
+      <div class="sidebar-status" id="sidebarStatus"></div>
+    </aside>
+
+    <main class="main">
+      <!-- ============ Home ============ -->
+      <section class="view" id="view-home">
+        <div class="home">
+          <div class="stage">
+            <div class="stage-top" id="stageChips"></div>
+
+            <button class="orb" id="orb" data-state="loading" aria-label="Listen">
+              <span class="orb-glow"></span>
+              <span class="orb-ring r3"></span>
+              <span class="orb-ring r2"></span>
+              <span class="orb-ring r1"></span>
+              <span class="orb-progress"></span>
+              <span class="orb-core"><span data-icon="mic" class="orb-icon"></span></span>
+            </button>
+
+            <div class="stage-text">
+              <div class="stage-title" id="stageTitle"></div>
+              <div class="stage-detail" id="stageDetail"></div>
+            </div>
+
+            <div class="confirm" id="confirmCard" hidden>
+              <div class="confirm-head"><span data-icon="alert"></span><span id="confirmText"></span></div>
+              <pre class="confirm-detail" id="confirmDetail" hidden></pre>
+              <div class="confirm-actions">
+                <button class="btn btn-ghost" id="confirmNo" data-t="no"></button>
+                <button class="btn btn-warn" id="confirmYes" data-t="yes"></button>
+              </div>
+              <div class="confirm-hint" data-t="confirm_hint"></div>
+            </div>
+
+            <form class="ask" id="askForm" autocomplete="off">
+              <span data-icon="keyboard" class="ask-icon"></span>
+              <input id="askInput" type="text" spellcheck="false" data-t-placeholder="ask_placeholder">
+              <button class="ask-send" type="submit" aria-label="Run"><span data-icon="send"></span></button>
+            </form>
+            <div class="examples" id="examples"></div>
+          </div>
+
+          <div class="feed">
+            <div class="feed-head">
+              <h2 data-t="recent"></h2>
+              <button class="btn btn-ghost btn-sm" id="clearHistory"><span data-icon="trash"></span><span data-t="clear"></span></button>
+            </div>
+            <div class="feed-list" id="feed"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Commands ============ -->
+      <section class="view" id="view-commands" hidden>
+        <div class="page">
+          <header class="page-head">
+            <h1 data-t="nav_commands"></h1>
+            <p data-t="commands_intro"></p>
+          </header>
+
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h3 data-t="custom_title"></h3>
+                <p data-t="custom_desc"></p>
+              </div>
+              <button class="btn btn-primary btn-sm" id="addCommand"><span data-icon="plus"></span><span data-t="add_command"></span></button>
+            </div>
+            <div id="customList" class="custom-list"></div>
+            <div class="card-foot">
+              <span class="save-state" id="commandsSaved"></span>
+              <button class="btn btn-primary" id="saveCommands" data-t="save"></button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h3 data-t="cheatsheet_title"></h3>
+                <p data-t="cheatsheet_desc"></p>
+              </div>
+              <div class="seg" id="cheatLang">
+                <button data-v="tr">Türkçe</button>
+                <button data-v="en">English</button>
+              </div>
+            </div>
+            <div class="cheats" id="cheats"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Settings ============ -->
+      <section class="view" id="view-settings" hidden>
+        <div class="page" id="settingsPage"></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" hidden></div>
+
+  <script src="js/icons.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/mock.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
